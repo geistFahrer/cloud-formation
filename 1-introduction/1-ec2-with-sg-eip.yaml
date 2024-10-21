@@ -1,0 +1,19 @@
+
+Parameters:
+  Environnment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+Conditions:
+  IsProd: !Equals [!Ref Environnment, prod]
+  IsNotProd: !Not [!Equals [!Ref Environnment, prod]]
+
+Resources:
+  MyBucketDev:
+    Type: AWS::S3::Bucket
+    Condition: IsNotProd
+  MyBucketProd:
+    Type: AWS::S3::Bucket
+    Condition: IsProd
